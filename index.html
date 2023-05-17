@@ -1,1 +1,43 @@
-Hi
+<html>
+<style>
+[data-lightning-out="true"]
+{
+--lwc-colorTextLabel: #FF0000;
+}
+</style>
+                
+<script src="https://storyfactory--flowout.sandbox.my.site.com/forms/lightning/lightning.out.js"></script>
+<div data-lightning-out="true"></div>
+
+<script>
+
+    const appName = 'c:lightningOutApp';
+    const componentName = 'c:LightningOutFlowLwc';
+    const lightningEndpoint = 'https://storyfactory--flowout.sandbox.my.site.com/forms';
+    const targetElement = document.querySelector("[data-lightning-out]");
+    
+    // read url paramater
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const componentAttributes = {
+        flowApiName: 'Workshop_Booking_Screen_Flow',
+        flowInputVariables: [{name: 'workshopId', type: 'String', value: 'null'}]
+    };
+
+    $Lightning.use(
+        appName,
+        function (){
+            $Lightning.createComponent(
+                componentName,
+                componentAttributes,
+                targetElement,
+                function (cmp){
+                    console.log('lightning component created');
+                }
+            );
+        },
+        lightningEndpoint
+    );
+
+</script>
+</html>
