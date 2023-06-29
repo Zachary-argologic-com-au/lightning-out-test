@@ -2,26 +2,25 @@
 <style>
 [data-lightning-out="true"]
 {
---lwc-colorTextLabel: #000000;
 }
 </style>
                 
-<script src="https://storyfactory.my.site.com/forms/lightning/lightning.out.js"></script>
+<script src="https://phifinneymcdonald2020--settlform.sandbox.my.site.com//lightning/lightning.out.js"></script>
 <div data-lightning-out="true"></div>
 
 <script>
 
     const appName = 'c:lightningOutApp';
     const componentName = 'c:LightningOutFlowLwc';
-    const lightningEndpoint = 'https://storyfactory.my.site.com/forms';
+    const lightningEndpoint = 'https://phifinneymcdonald2020--settlform.sandbox.my.site.com/';
     const targetElement = document.querySelector("[data-lightning-out]");
     
     // read url paramater
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const componentAttributes = {
-        flowApiName: 'Workshop_Booking_Screen_Flow',
-        flowInputVariables: []
+        flowApiName: 'Form_Submission_Settlement_Form',
+        flowInputVariables: [{name: 'recordId', type: 'String', value: urlParams.get('recordId')}]
     };
 
     $Lightning.use(
