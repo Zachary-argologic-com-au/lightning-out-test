@@ -2,27 +2,25 @@
 <style>
 [data-lightning-out="true"]
 {
---lwc-colorTextLabel: #000000;
-  --lwc-heightInput: 2.75rem;
 }
 </style>
                 
-<script src="https://storyfactory.my.site.com/forms/lightning/lightning.out.js"></script>
+<script src="https://storyfactory.my.salesforce-sites.com/VolunteerRegistration/lightning/lightning.out.js"></script>
 <div data-lightning-out="true"></div>
 
 <script>
 
     const appName = 'c:lightningOutApp';
     const componentName = 'c:LightningOutFlowLwc';
-    const lightningEndpoint = 'https://storyfactory.my.site.com/forms';
+    const lightningEndpoint = 'https://storyfactory.my.salesforce-sites.com/VolunteerRegistration';
     const targetElement = document.querySelector("[data-lightning-out]");
     
     // read url paramater
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const componentAttributes = {
-        flowApiName: 'Workshop_Booking_Screen_Flow',
-        flowInputVariables: []
+        flowApiName: 'Contact_Communication_Subscriptions_Preference_Centre',
+        flowInputVariables: [{name: 'Guid', type: 'String', value: urlParams.get('Guid')}]
     };
 
     $Lightning.use(
