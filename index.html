@@ -1,42 +1,81 @@
 <html>
-<style>
-[data-lightning-out="true"]
-{
-}
-</style>
+    <style id="style">
+        [data-lightning-out="true"]
+        {
+            --slds-c-input-shadow-focus: 0 0 3px #0176d3;
+        }
+    </style>
                 
-<script src="https://storyfactory.my.salesforce-sites.com/VolunteerRegistration/lightning/lightning.out.js"></script>
-<div data-lightning-out="true"></div>
+    <div id="host"></div>
+    <script src="https://phifinneymcdonald2020.my.site.com/forms/lightning/lightning.out.js"></script>
+    <div id="flow" data-lightning-out="true"></div>
 
-<script>
+    <script>{
+        const useShadowDom = true;
+        const host = document.querySelector("#host");
+        const shadow = host.attachShadow({ mode: "open" });
+        const appName = 'c:lightningOutApp';
+        const componentName = 'c:LightningOutFlowLwc';
+        const lightningEndpoint = 'https://phifinneymcdonald2020.my.site.com/forms';
+        const targetElement = document.querySelector("[data-lightning-out]");
+        
+        // read url parameter
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const componentAttributes = {
+            flowApiName: 'Form_Submission_Class_Action_Opt_Out',
+            flowInputVariables: [{name: 'GUID', type: 'String', value: (urlParams.get("GUID") != null ? urlParams.get("GUID") : "")},{name: 'recordId', type: 'String', value: (urlParams.get("recordId") != null ? urlParams.get("recordId") : "")}]
+        };
+        if (useShadowDom) {
+            const targetNode = document.querySelector("head");
 
-    const appName = 'c:lightningOutApp';
-    const componentName = 'c:LightningOutFlowLwc';
-    const lightningEndpoint = 'https://storyfactory.my.salesforce-sites.com/VolunteerRegistration';
-    const targetElement = document.querySelector("[data-lightning-out]");
-    
-    // read url paramater
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const componentAttributes = {
-        flowApiName: 'Contact_Communication_Subscriptions_Preference_Centre',
-        flowInputVariables: [{name: 'GUID', type: 'String', value: urlParams.get('GUID')}]
-    };
-
-    $Lightning.use(
-        appName,
-        function (){
-            $Lightning.createComponent(
-                componentName,
-                componentAttributes,
-                targetElement,
-                function (cmp){
-                    console.log('lightning component created');
+            const head = document.createElement('head');
+            shadow.prepend(head);
+            const callback = (mutationList, observer) => {
+                for (const mutation of mutationList) {
+                    if (mutation.type === "childList") {
+                        for (const node of mutation.addedNodes) {
+                            if (/^\s*<style[^\>]*data-rendered-by-lwc[^\>]*\>/.test(node.outerHTML)) {
+                                head.append(node);
+                            } else if (node.href != null && node.href?.includes('my.salesforce-sites.com') && node.type === 'text/css') {
+                                head.append(node);
+                            }
+                        }
+                    }
                 }
-            );
-        },
-        lightningEndpoint
-    );
-
-</script>
+            };
+        
+            const config = { attributes: true, childList: true, subtree: true };
+            const observer = new MutationObserver(callback);
+            observer.observe(targetNode, config);
+        }
+        $Lightning.use(
+            appName,
+            function (){
+                $Lightning.createComponent(
+                    componentName,
+                    componentAttributes,
+                    targetElement,
+                    async function (cmp) {
+                        if (useShadowDom) {
+                            const link = document.querySelector(".auraCss");
+                            const data = await (await fetch(link.href)).text();
+                            const styles = data.replace(/:\s*root([^\{]*)\{/g, ":host$1{")
+                            const stylesheet = document.createElement('style');
+                            stylesheet.innerHTML = styles;
+                            shadow.prepend(stylesheet);
+                            
+                            const style = document.querySelector("#style");
+                            shadow.append(style);     
+                           
+                            const flow = document.querySelector("#flow");
+                            shadow.appendChild(flow);
+                        }
+                    }
+                );
+            },
+            lightningEndpoint
+        );
+    
+    }</script>
 </html>
