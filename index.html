@@ -1,5 +1,5 @@
 <html>
-    <style>html {
+     <style>html {
     font-size: 16px;
 }
 h1 {
@@ -23,7 +23,7 @@ footer a,p,h2 {
     </style>
                 
     <div id="host"></div>
-    <script src="https://phifinneymcdonald2020.my.site.com/forms/lightning/lightning.out.js"></script>
+    <script src="https://phifinneymcdonald2020.my.site.com//lightning/lightning.out.js"></script>
     <div id="flow" data-lightning-out="true"></div>
 
     <script>{
@@ -32,7 +32,7 @@ footer a,p,h2 {
         const shadow = host.attachShadow({ mode: "open" });
         const appName = 'c:lightningOutApp';
         const componentName = 'c:LightningOutFlowLwc';
-        const lightningEndpoint = 'https://phifinneymcdonald2020.my.site.com/forms';
+        const lightningEndpoint = 'https://phifinneymcdonald2020.my.site.com/';
         const targetElement = document.querySelector("[data-lightning-out]");
         
         // read url parameter
@@ -40,7 +40,7 @@ footer a,p,h2 {
         const urlParams = new URLSearchParams(queryString);
         const componentAttributes = {
             flowApiName: 'Form_Submission_Class_Action_Opt_Out',
-            flowInputVariables: [{name: 'GUID', type: 'String', value: (urlParams.get("GUID") != null ? urlParams.get("GUID") : "")},{name: 'recordId', type: 'String', value: (urlParams.get("recordId") != null ? urlParams.get("recordId") : "")}]
+            flowInputVariables: [{name: 'GUID', type: 'String', value: '78b6bd25-a7cd-4a2d-8c70-fa0c6d5cf225'}]
         };
         if (useShadowDom) {
             const targetNode = document.querySelector("head");
